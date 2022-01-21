@@ -27,5 +27,3 @@ int main() {
     printf("Now calling fpfptr: %p\n", pfptr());
 }
 
-
-
