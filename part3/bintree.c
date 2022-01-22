@@ -133,6 +133,7 @@ void addNode(TTreeNode **root, TTreeNode *node) {
 
 void freenode(TTreeNode *node) {
     // Frees the memory used by node.
+    free(node);
 }
 
 void print_inorder(TTreeNode *node) {
