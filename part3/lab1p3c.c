@@ -17,6 +17,7 @@ TPerson *makeNewNode(char *name, int age) {
 }
 
 void freeNode(TPerson *node) {
+    free(node->name);
     free(node);
 }
 
@@ -24,7 +25,7 @@ void freeNode(TPerson *node) {
 #define NUM_PERSONS 3
 int main() {
     TPerson persons[NUM_PERSONS] = {{"Tan Ah Kow", 65}, {"Sio Bak Pau", 23},
-    {"Aiken Dueet", 21}};
+        {"Aiken Dueet", 21}};
     TPerson *list[NUM_PERSONS];
 
     int i;

@@ -4,27 +4,27 @@
 static double  _queue[MAX_Q_SIZE];
 static int _front = 0, _rear = 0;
 
-void enq(double  data) {
-	if ((_front + 1) % MAX_Q_SIZE == _rear){
-		printf("Error: Queue is full. Item value %3.2f is not added.\n", data);
-	}
-	else {
-		_queue[_front] = data;
-		_front = (_front + 1) % MAX_Q_SIZE;
-	}
+void enq(double data) {
+    if ((_front + 1) % MAX_Q_SIZE == _rear){
+        printf("Error: Queue is full. Item value %3.2f is not added.\n", data);
+    }
+    else {
+        _queue[_front] = data;
+        _front = (_front + 1) % MAX_Q_SIZE;
+    }
 }
 
 double deq() {
-	double val = -1;
-	if (_rear == _front){
-		printf("Error: Queue is empty. Nothing to return\n");
-	}
-	else {
-		val = _queue[_rear];
-		_rear = (_rear + 1) % MAX_Q_SIZE;
-	}
+    double val = -1;
+    if (_rear == _front){
+        printf("Error: Queue is empty. Nothing to return\n");
+    }
+    else {
+        val = _queue[_rear];
+        _rear = (_rear + 1) % MAX_Q_SIZE;
+    }
 
-	return val;
+    return val;
 }
 
 /* This section is for the function pointers exercise */
@@ -59,15 +59,15 @@ double reduce() {
 }
 
 double flex_reduce(void (*clearptr)(), void (*opptr)(double)) {
-  int idx = _rear;
+    int idx = _rear;
 
-  (*clearptr)();
+    (*clearptr)();
 
-  while (idx != _front) {
-    (*opptr)(_queue[idx]);
-    idx = (idx + 1) % MAX_Q_SIZE;
-  }
+    while (idx != _front) {
+        (*opptr)(_queue[idx]);
+        idx = (idx + 1) % MAX_Q_SIZE;
+    }
 
-	return _res;
+    return _res;
 }
 

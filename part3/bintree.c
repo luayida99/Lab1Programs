@@ -4,12 +4,12 @@
 
 /* ------------------------- DO NOT IMPLEMENT THESE ----------------------
 
-These are provided "free" to you, and you do not need to implement them,
-though you MAY  need to understand what they do. Some give you hints
-on how to work with pointers to pointers. You MAY find some of these
-functions useful.
+   These are provided "free" to you, and you do not need to implement them,
+   though you MAY  need to understand what they do. Some give you hints
+   on how to work with pointers to pointers. You MAY find some of these
+   functions useful.
 
-  ------------------------------------------------------------------------- */
+   ------------------------------------------------------------------------- */
 
 // Searches for the node containing "name" in the tree whose root is at "root", 
 // returning both the node ifself in "node", and its parent in "prevnode" 
@@ -30,7 +30,7 @@ void findNode(char *name, TTreeNode *root, TTreeNode **node, TTreeNode **prevnod
             *prevnode = prev;
             return;
         }
-        
+
         prev = trav;
         if(cmp < 0)
             trav = trav->right;
@@ -114,11 +114,29 @@ void delNode(TTreeNode *node, TTreeNode *prevnode) {
 void delTree(TTreeNode *root) {
     // Implement deleting the entire tree, whose
     // root is at "root".
+    if (root == NULL) {
+        return;
+    }
+    if (root->left == NULL && root->right == NULL) {
+        freenode(root);
+        root = NULL;
+    } else {
+        delTree(root->left);
+        delTree(root->right);
+    }
 }
 
 TTreeNode *makeNewNode(char *name, char *phoneNum) {
     // Implement makeNewNode to create a new
     // TTreeNode containing name and phoneNum
+    TTreeNode *node = (TTreeNode *) malloc(sizeof(TTreeNode));
+    node->name = (char *) malloc(strlen(name) + 1);
+    strcpy(node->name, name);
+    strcpy(node->phoneNum, phoneNum);
+    node->left = NULL;
+    node->right = NULL;
+
+    return node;
 }
 
 // Add a new node to the tree. 
@@ -126,17 +144,50 @@ TTreeNode *makeNewNode(char *name, char *phoneNum) {
 // not the root itself.
 
 void addNode(TTreeNode **root, TTreeNode *node) {
-
     // Add a new node to the tree, where root is
     // the POINTER to the tree's root.
+    if (*root == NULL) {
+        *root = node;
+        return;
+    }
+
+    TTreeNode *trav = *root;
+
+    while (1) {
+        int cmp = strcmp(trav->name, node->name);
+
+        if (cmp < 0) {
+            if (trav->right == NULL) {
+                trav->right = node;
+                return;
+            } else {
+                trav = trav->right;
+            }
+        } else {
+            if (trav->left == NULL) {
+                trav->left = node;
+                return;
+            } else {
+                trav = trav->left;
+            }
+        }
+    }
 }
 
 void freenode(TTreeNode *node) {
     // Frees the memory used by node.
+    free(node->name);
     free(node);
 }
 
 void print_inorder(TTreeNode *node) {
     // Implement in-order printing of the tree
     // Recursion is probably best here.
+    if (node == NULL) {
+        return;
+    }
+
+    print_inorder(node->left);
+    printf("%s, %s", node->name, node->phoneNum);
+    print_inorder(node->right); 
 }
