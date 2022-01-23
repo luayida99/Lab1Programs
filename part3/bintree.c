@@ -188,6 +188,6 @@ void print_inorder(TTreeNode *node) {
     }
 
     print_inorder(node->left);
-    printf("%s, %s", node->name, node->phoneNum);
+    printf("Name: %s, Phone Number: %s\n", node->name, node->phoneNum);
     print_inorder(node->right); 
 }
