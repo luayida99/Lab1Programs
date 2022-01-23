@@ -123,6 +123,7 @@ void delTree(TTreeNode *root) {
     } else {
         delTree(root->left);
         delTree(root->right);
+        freenode(root);
     }
 }
 
